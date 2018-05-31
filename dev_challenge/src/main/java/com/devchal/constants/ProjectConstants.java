@@ -13,6 +13,8 @@ public class ProjectConstants {
 	
 	//pathing constants
 	public static final String CREATE_USER = "/createUser";
+	public static final String SEARCH_BYTOPIC = "/searchByTopic";
+	public static final String SEARCH_BYID = "/searchByID";
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

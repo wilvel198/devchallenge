@@ -2,6 +2,7 @@ package com.devchal.databaseutils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +17,16 @@ public class DatabaseUtil {
 		// TODO Auto-generated method stub
 		logger.info("------------> TESTING DATABASE CONNECTIONS <------------------");
 		testConnection();
+		String userEmail = "wvelasquezcorp@gmail.com";
+		
+		int userCount = verifyUser(userEmail);
+		
+		if(userCount < 1){
+			logger.info("USER WAS NOT FOUND CREATE THE USER --->");
+			
+		}else{
+			logger.info("USER ALREADY EXISTS ");
+		}
 
 	}
 
@@ -104,11 +115,46 @@ public class DatabaseUtil {
 		return result;
 	}
 	
-	public static String verifyUser(String checkString){
+	public static int verifyUser(String checkString){
+		logger.info("CHECKING FOR USER -->" + checkString);
+		int userCount = 0;
 		String result = null;
+		String userEmail = checkString;
+		Connection conn = null;
+		Statement statement = null;
+		
+		
+		String checkQuery = "select count(*) as userCount from USER_ACCOUNTS where emailAddress = '"+ userEmail +"'";
+		logger.info("CHECK QUERY -------->"+ checkQuery);
+		
+		//get a connection
+		conn = getConnection();
+		
+	
+		// create a statement for the query
+		  try {
+			 statement = conn.createStatement();
+			 
+		//create a result object
+			 ResultSet rs = statement.executeQuery(checkQuery);
+			 
+			 while (rs.next())
+		      {
+				 
+				 logger.info("USER COUNT --->" + rs.getInt("userCount")); 
+		      }
+
+			 
+			conn.close();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		
-		return result;
+		return userCount;
 	}
 }
