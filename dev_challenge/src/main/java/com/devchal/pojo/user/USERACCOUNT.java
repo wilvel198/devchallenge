@@ -6,7 +6,8 @@ public class USERACCOUNT
 
     private String lastName;
 
-    private String emailaddress;
+    
+    private String emailAddress;
 
     private String phoneNumber;
 
@@ -44,12 +45,12 @@ public class USERACCOUNT
 
     public String getEmailaddress ()
     {
-        return emailaddress;
+        return emailAddress;
     }
 
     public void setEmailaddress (String emailaddress)
     {
-        this.emailaddress = emailaddress;
+        this.emailAddress = emailaddress;
     }
 
     public String getPhoneNumber ()
@@ -125,6 +126,6 @@ public class USERACCOUNT
     @Override
     public String toString()
     {
-        return "ClassPojo [zip = "+zip+", lastName = "+lastName+", emailaddress = "+emailaddress+", phoneNumber = "+phoneNumber+", address = "+address+", userid = "+userid+", state = "+state+", firstName = "+firstName+", objectType = "+objectType+", city = "+city+"]";
+        return "ClassPojo [zip = "+zip+", lastName = "+lastName+", emailaddress = "+emailAddress+", phoneNumber = "+phoneNumber+", address = "+address+", userid = "+userid+", state = "+state+", firstName = "+firstName+", objectType = "+objectType+", city = "+city+"]";
     }
 }
