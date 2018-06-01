@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devchal.constants.ProjectConstants;
 import com.devchal.contentdata.ContentData;
+import com.devchal.pojo.data.GiffyObject;
 import com.devchal.pojo.data.GiffySearchResults;
 import com.devchal.pojo.data.Languages;
 import com.devchal.responseobjects.responseObject;
@@ -91,22 +92,41 @@ public class ProcessorController {
 		return myLang;
 	}
 	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@RequestMapping(value = ProjectConstants.SEARCH_BYID, method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE )
+	@ResponseBody
+	public GiffyObject searchById(HttpEntity<String> httpEntity){
+		GiffyObject giphyObj = new GiffyObject();
+		
+		giphyObj.setGiffyTitle("Test");
+		
+		return giphyObj;
+	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	@RequestMapping(value = ProjectConstants.SEARCH_BYTOPIC, method=RequestMethod.POST )
+	@RequestMapping(value = ProjectConstants.SEARCH_BYTOPIC, method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE )
+	@ResponseBody
 	public GiffySearchResults searchByTopic(HttpEntity<String> httpEntity){
+		
+		GiffySearchResults myRes = new GiffySearchResults();
 		
 		String responseData = null;
 		
    	 	String fullJson = httpEntity.getBody(); // yeah we finally got the plain json string
    	 	System.out.println("<----------------------------------------------------------------------->");
         System.out.println( String.format("JSON INFORMATION ----->" + fullJson));
-        responseObject myResponse = systemProcessor.addUser(fullJson);
+         List<String> myResponse = systemProcessor.getGiffySearchByTopic(fullJson);
         
         System.out.println("<----------------------------------------------------------------------->");
    	
+        String[] searchArr = new String[myResponse.size()];
+		searchArr = myResponse.toArray(searchArr);
 		
-		return null;
+		myRes.setSearchResults(searchArr);
+		
+		
+		
+		return myRes;
 	}
 	
 

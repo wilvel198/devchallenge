@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.devchal.databaseutils.DatabaseUtil;
+import com.devchal.giphytools.giphyUtils;
 import com.devchal.pojo.user.USERACCOUNT;
 import com.devchal.responseobjects.responseObject;
 import com.google.gson.Gson;
@@ -70,11 +71,21 @@ public class systemProcessor {
 	
 	
 	public static List<String> getGiffySearchByTopic(String searchJson){
+		System.out.println("SEARCH FROM SERVER CALL ------>" + searchJson);
+		
 		List<String> searchResultList = new ArrayList<String>();
 		searchResultList.add("dogs_jumprope_GIF##cLcxtL1z8t8oo");
 		searchResultList.add("star wars dogs GIF##fItgT774J3nWw");
+		String searchType = null;
+		String searchBase = "dogs";
+		
+		logger.info("-----> Extract Search Base <------");
+		searchBase = giphyUtils.getSearchTopic(searchJson);
+		
+		searchType = "fullSearch";
 		
 		
+		searchResultList = giphyUtils.baseSearch(searchBase, searchType);
 		
 		return searchResultList;
 	}
