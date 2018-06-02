@@ -54,8 +54,8 @@ public class giphyUtils {
 	searchBase = "dogs";
 	searchType = "fullSearch";
 	// -- test for ID search
-	//searchBase = testID;
-	//searchType  ="id";
+	searchBase = testID;
+	searchType  ="id";
 	
 	baseSearch(searchBase, searchType);
 		
@@ -76,7 +76,7 @@ public class giphyUtils {
 		}else
 		{
 			logger.info("---------- > PERFORM ID SEARCH <---------------");
-			searchURL =  "https://api.giphy.com/v1/gifs?api_key=Q1TTfATI6kOo38xfDRcqBazWCGRXu9VP&ids=" + searchTopic;
+			searchURL =  "http://api.giphy.com/v1/gifs?api_key=Q1TTfATI6kOo38xfDRcqBazWCGRXu9VP&ids=" + searchTopic;
 		}
 		
 		
@@ -151,11 +151,14 @@ public class giphyUtils {
 				if(checkObj.equals(searchType)){
 					logger.info(" -----> FULL SEARCH RETURNS 2 FIELDS <---------------");
 					dataString = giffyTitle  + "#####" + giffyId;
-					list.add(dataString);
+					list.add(dataString.replaceAll(" ", "_"));
 					
 				}else{
 					logger.info(" -----> ID SEARCH RETURNS ALL FIELDS <---------------");
+					String giffyItem = "{\"giffyTitle\":\""+ giffyTitle + "\" , \"giffyId\":\""+ giffyId + "\",\"giffyURL\":\" "+giffyURL +"  \",\"giffyEmbeddedURL\":\""+ giffyEmbeddedURL  +"\" }";
+					
 					dataString = giffyTitle + "####" + giffyId + "####"+ giffyURL + "####"+ giffyEmbeddedURL;
+					list.add(giffyItem.replace(" ", "_"));
 				}
 				
 					

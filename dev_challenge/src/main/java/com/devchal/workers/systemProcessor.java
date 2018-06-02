@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.devchal.databaseutils.DatabaseUtil;
 import com.devchal.giphytools.giphyUtils;
+import com.devchal.pojo.data.GiffyObject;
 import com.devchal.pojo.user.USERACCOUNT;
 import com.devchal.responseobjects.responseObject;
 import com.google.gson.Gson;
@@ -88,6 +89,39 @@ public class systemProcessor {
 		searchResultList = giphyUtils.baseSearch(searchBase, searchType);
 		
 		return searchResultList;
+	}
+	
+	
+	public static GiffyObject getGiphyObjDetails(String searchJson){
+		//GiffyObject giphyObj = new GiffyObject();
+		logger.info("------------> GETTING OBJECT DETAILS <------------");
+		
+		
+		String searchType = null;
+		String searchBase = null;
+		String resultJson = null;
+		Gson gson = new Gson();
+		
+		searchType = "searchByID";
+		
+		logger.info("-----> Extract Search Base <------");
+		searchBase = giphyUtils.getSearchTopic(searchJson);
+		logger.info("SEARCH BASE --->" + searchBase);
+		
+		List<String> searchResultList = giphyUtils.baseSearch(searchBase, searchType );
+		
+		resultJson = searchResultList.get(0);
+		logger.info("--------> GIPHY OBJECT JSON" + searchResultList.get(0));
+		
+		logger.info(searchResultList.size());
+		
+		
+		//seup giphy Object details 
+		
+		GiffyObject giffyObj = gson.fromJson(resultJson, GiffyObject.class);
+		
+		return giffyObj;
+		
 	}
 
 }
