@@ -98,9 +98,17 @@ public class ProcessorController {
 	public GiffyObject searchById(HttpEntity<String> httpEntity){
 		GiffyObject giphyObj = new GiffyObject();
 		
+	
+		
+   	 	String fullJson = httpEntity.getBody(); // yeah we finally got the plain json string
+   	 	System.out.println("<----------------------------------------------------------------------->");
+        System.out.println( String.format("JSON INFORMATION ----->" + fullJson));
+        
+        GiffyObject result = systemProcessor.getGiphyObjDetails(fullJson);   
+		
 		giphyObj.setGiffyTitle("Test");
 		
-		return giphyObj;
+		return result;
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
