@@ -14,9 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-
-
-
+import java.net.URLEncoder;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,11 +70,11 @@ public class giphyUtils {
 		//check the search type
 		if (searchType.equals(checkVal) ){
 			logger.info("---------- > PERFORM A FULL SEARCH <---------------");
-			searchURL = "http://api.giphy.com/v1/gifs/search?api_key=Q1TTfATI6kOo38xfDRcqBazWCGRXu9VP&limit=20&offset=0&rating=G&lang=en&q="+searchTopic;
+			searchURL = "http://api.giphy.com/v1/gifs/search?api_key=Q1TTfATI6kOo38xfDRcqBazWCGRXu9VP&limit=20&offset=0&rating=G&lang=en&q="+  URLEncoder.encode( searchTopic, "UTF-8");
 		}else
 		{
 			logger.info("---------- > PERFORM ID SEARCH <---------------");
-			searchURL =  "http://api.giphy.com/v1/gifs?api_key=Q1TTfATI6kOo38xfDRcqBazWCGRXu9VP&ids=" + searchTopic;
+			searchURL =  "http://api.giphy.com/v1/gifs?api_key=Q1TTfATI6kOo38xfDRcqBazWCGRXu9VP&ids=" + URLEncoder.encode( searchTopic, "UTF-8");
 		}
 		
 		
@@ -122,6 +120,7 @@ public class giphyUtils {
 		String giffyEmbeddedURL = null;
 		String giffyTitle = null;
 		String dataString = null;
+		JSONObject giffyBaseURL = null;
 		int returnSize = 0;
 		String checkObj = null;
 		checkObj = "fullSearch";
@@ -143,7 +142,7 @@ public class giphyUtils {
 				giffyId = giffyInfo.getString("id");
 				giffyTitle = giffyInfo.getString("title");
 				giffyURL = giffyInfo.getString("url");
-				giffyEmbeddedURL = giffyInfo.getString("embed_url");
+				
 			
 				logger.info("ID " + giffyId);
 				logger.info(giffyInfo.getString("title"));
@@ -155,6 +154,12 @@ public class giphyUtils {
 					
 				}else{
 					logger.info(" -----> ID SEARCH RETURNS ALL FIELDS <---------------");
+					giffyEmbeddedURL = giffyInfo.getString("embed_url");
+					giffyBaseURL  = giffyInfo.getJSONObject("images");
+					JSONObject giffyOriginal = giffyBaseURL.getJSONObject("fixed_height_still");
+					logger.info("the base URL IS " + giffyOriginal.getString("url"));
+					giffyURL = giffyOriginal.getString("url");
+					
 					String giffyItem = "{\"giffyTitle\":\""+ giffyTitle + "\" , \"giffyId\":\""+ giffyId + "\",\"giffyURL\":\" "+giffyURL +"  \",\"giffyEmbeddedURL\":\""+ giffyEmbeddedURL  +"\" }";
 					
 					dataString = giffyTitle + "####" + giffyId + "####"+ giffyURL + "####"+ giffyEmbeddedURL;

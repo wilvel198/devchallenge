@@ -142,6 +142,7 @@ public class DatabaseUtil {
 		      {
 				 
 				 logger.info("USER COUNT --->" + rs.getInt("userCount")); 
+				 userCount = rs.getInt("userCount");
 		      }
 
 			 
