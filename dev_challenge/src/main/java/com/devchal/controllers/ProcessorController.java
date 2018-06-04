@@ -92,6 +92,25 @@ public class ProcessorController {
 		return myLang;
 	}
 	
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@RequestMapping(value = ProjectConstants.SAVE_FAV, method=RequestMethod.POST )
+	public responseObject savefavorate(HttpEntity<String> httpEntity){
+		
+		String fullJson = httpEntity.getBody(); // yeah we finally got the plain json string
+   	 	System.out.println("<----------------------------------------------------------------------->");
+        System.out.println( String.format("JSON INFORMATION ----->" + fullJson));
+		
+		 responseObject myResponse = systemProcessor.saveFavProcessor(fullJson);
+				 
+			//	 systemProcessor.addUser(fullJson);
+		
+		
+		return myResponse;
+	}
+	
+	
+	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@RequestMapping(value = ProjectConstants.SEARCH_BYID, method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE )
 	@ResponseBody

@@ -115,6 +115,48 @@ public class DatabaseUtil {
 		return result;
 	}
 	
+	public static int verifyFav(String userEmail, String giffyId){
+		
+		int favCount = 0;
+		Connection conn = null;
+		Statement statement = null;
+		
+		String checkQuery = "select count(*) as userCount from USER_DATA where emailAddress = '"+ userEmail +"' and giffyID = '"+ giffyId +"'";
+		logger.info("CHECK QUERY -------->"+ checkQuery);
+		
+		// create a statement for the query
+		  try {
+			  
+			  conn = getConnection(); 
+			 statement = conn.createStatement();
+			 
+		//create a result object
+			 ResultSet rs = statement.executeQuery(checkQuery);
+			 
+			 while (rs.next())
+		      {
+				 
+				 logger.info("USER COUNT --->" + rs.getInt("userCount")); 
+				 favCount = rs.getInt("userCount");
+		      }
+
+			 
+			conn.close();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		return favCount;
+	}
+	
 	public static int verifyUser(String checkString){
 		logger.info("CHECKING FOR USER -->" + checkString);
 		int userCount = 0;
@@ -142,6 +184,7 @@ public class DatabaseUtil {
 		      {
 				 
 				 logger.info("USER COUNT --->" + rs.getInt("userCount")); 
+				 userCount = rs.getInt("userCount");
 		      }
 
 			 

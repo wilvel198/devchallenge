@@ -16,6 +16,15 @@ public class ProjectConstants {
 	public static final String SEARCH_BYTOPIC = "/searchByTopic";
 	public static final String SEARCH_BYID = "/searchByID";
 	
+	//constants for favorites
+	public static final String SAVE_FAV = "/savefav";
+	public static final String GET_FAVLIST = "/getfavlist";
+	public static final String FAV_DETAILS = "/getfavdetails";
+	//login constant
+	public static final String LOGIN = "/login";
+	
+	
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
