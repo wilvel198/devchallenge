@@ -52,8 +52,8 @@ public class giphyUtils {
 	searchBase = "dogs";
 	searchType = "fullSearch";
 	// -- test for ID search
-	searchBase = testID;
-	searchType  ="id";
+	//searchBase = testID;
+	//searchType  ="id";
 	
 	baseSearch(searchBase, searchType);
 		

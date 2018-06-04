@@ -18,7 +18,7 @@ public class ProjectConstants {
 	
 	//constants for favorites
 	public static final String SAVE_FAV = "/savefav";
-	public static final String GET_FAV = "/getfav";
+	public static final String GET_FAVLIST = "/getfavlist";
 	public static final String FAV_DETAILS = "/getfavdetails";
 	//login constant
 	public static final String LOGIN = "/login";
