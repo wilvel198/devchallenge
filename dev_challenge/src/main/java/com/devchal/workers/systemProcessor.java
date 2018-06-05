@@ -32,12 +32,12 @@ public class systemProcessor {
 		String userData = "{\"firstName\":\"Darla\",\"lastName\":\"Smith\",\"address\":\"1234 Somewhere\",\"city\":\"Austin\",\"state\":\"Texas\",\"emailaddress\":\"w_velasquezcorp@yahoo.com\",\"zip\":\"78665\",\"phoneNumber\":\"512-555-5555\",\"username\":\"person198\",\"password\":\"password\"}";
 		//test to load favorite 
 		String favData = "{\"emailAddress\":\"w_velasquezcorp@yahoo.com\",\"categories\":\"happy,cats,interesting\",\"giffyEmeddedURL\":\"https://giphy.com/embed/9qIQcHFew1dAs\",\"giffyID\":\"9qIQcHFew1dAs\",\"giffyTitle\":\"bears hello GIF\",\"giffyURL\":\"https://media0.giphy.com/media/9qIQcHFew1dAs/200_s.gif\"}";
+		String searchString = null;
 		
-		
-		
+		//searchById(searchString);
 		//addUser(userData);
 		
-		saveFavProcessor(favData);
+		//saveFavProcessor(favData);
 		
 	}
 	
@@ -300,6 +300,8 @@ public class systemProcessor {
 		//seup giphy Object details 
 		
 		GiffyObject giffyObj = gson.fromJson(resultJson, GiffyObject.class);
+		
+		
 		
 		return giffyObj;
 		

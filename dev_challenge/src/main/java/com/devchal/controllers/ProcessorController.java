@@ -115,6 +115,8 @@ public class ProcessorController {
 	@RequestMapping(value = ProjectConstants.SEARCH_BYID, method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE )
 	@ResponseBody
 	public GiffyObject searchById(HttpEntity<String> httpEntity){
+		System.out.println("----------> Searching By ID <----------");
+		
 		GiffyObject giphyObj = new GiffyObject();
 		
 	
@@ -135,6 +137,7 @@ public class ProcessorController {
 	@ResponseBody
 	public GiffySearchResults searchByTopic(HttpEntity<String> httpEntity){
 		
+		System.out.println("------------> SEARCH BY TOPIC <--------------");
 		GiffySearchResults myRes = new GiffySearchResults();
 		
 		String responseData = null;
