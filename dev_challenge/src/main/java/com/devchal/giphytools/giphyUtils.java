@@ -154,16 +154,16 @@ public class giphyUtils {
 					
 				}else{
 					logger.info(" -----> ID SEARCH RETURNS ALL FIELDS <---------------");
-					giffyEmbeddedURL = giffyInfo.getString("embed_url");
+					giffyEmbeddedURL = giffyInfo.getString("embed_url").replace("https", "http");
 					giffyBaseURL  = giffyInfo.getJSONObject("images");
 					JSONObject giffyOriginal = giffyBaseURL.getJSONObject("fixed_height_still");
 					logger.info("the base URL IS " + giffyOriginal.getString("url"));
-					giffyURL = giffyOriginal.getString("url");
+					giffyURL = giffyOriginal.getString("url").replace("https", "http");
 					
 					String giffyItem = "{\"giffyTitle\":\""+ giffyTitle + "\" , \"giffyId\":\""+ giffyId + "\",\"giffyURL\":\" "+giffyURL +"  \",\"giffyEmbeddedURL\":\""+ giffyEmbeddedURL  +"\" }";
 					
 					dataString = giffyTitle + "####" + giffyId + "####"+ giffyURL + "####"+ giffyEmbeddedURL;
-					list.add(giffyItem.replace(" ", "_"));
+					list.add(giffyItem);
 				}
 				
 					
@@ -215,12 +215,23 @@ public class giphyUtils {
 
 	public static String getSearchTopic(String json){
 		logger.info(" SEARCH TOPIC JSON -->" + json);
+		int searchTopicIndex = 0;
 		String searchTopic = null;
 		searchTopic = "dogs";
 		Gson gson = new Gson();
 		
 		SearchTopic myTopic = gson.fromJson(json,SearchTopic.class);
+		
+		
 		searchTopic = myTopic.getSearchTopic();
+		
+		searchTopicIndex = searchTopic.indexOf("#####");
+		logger.info("---------> FIX THE TOPIC ------->" + searchTopicIndex);
+		if(searchTopicIndex > 0){
+			logger.info("--------> SPLIT THE VALUE ");
+			String[] splitTopic = searchTopic.split("#####");
+			searchTopic = splitTopic[1].toString();
+		}
 		
 		return searchTopic;
 	}
