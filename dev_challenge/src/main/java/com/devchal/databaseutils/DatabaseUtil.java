@@ -9,6 +9,8 @@ import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
+import com.devchal.responseobjects.responseObject;
+
 public class DatabaseUtil {
 
 	final static Logger logger = Logger.getLogger(DatabaseUtil.class);
@@ -17,6 +19,8 @@ public class DatabaseUtil {
 		// TODO Auto-generated method stub
 		logger.info("------------> TESTING DATABASE CONNECTIONS <------------------");
 		testConnection();
+		
+		/*
 		String userEmail = "wvelasquezcorp@gmail.com";
 		
 		int userCount = verifyUser(userEmail);
@@ -26,7 +30,7 @@ public class DatabaseUtil {
 			
 		}else{
 			logger.info("USER ALREADY EXISTS ");
-		}
+		}*/
 
 	}
 
@@ -81,6 +85,17 @@ public class DatabaseUtil {
 
 	}
 
+	
+	public static responseObject authenticate(String userName, String password){
+		responseObject res = new responseObject();
+		logger.info("---------- TESTING AUTHENTICATION ----------------");
+		
+		
+		
+		
+		
+		return res;
+	}
 	// method to read from database
 	public static String readDB(String readString) {
 		logger.info("---------------- READING DATABASE -----------------");
@@ -199,5 +214,76 @@ public class DatabaseUtil {
 		
 		
 		return userCount;
+	}
+	
+	public static int verifyAccount(String userName, String password){
+		logger.info("CHECKING FOR USER -->" + userName);
+		int userCount = 0;
+		Connection conn = null;
+		Statement statement = null;
+		String checkQuery = "select count(*) as userCount from USER_ACCOUNTS where username = '"+ userName +"' and password = '"+ password +"'";
+		logger.info("CHECK QUERY -------->"+ checkQuery);
+		
+		// create a statement for the query
+		  try {
+			  
+			  conn = getConnection(); 
+			 statement = conn.createStatement();
+			 
+		//create a result object
+			 ResultSet rs = statement.executeQuery(checkQuery);
+			 
+			 while (rs.next())
+		      {
+				 
+				 logger.info("USER COUNT --->" + rs.getInt("userCount")); 
+				 userCount = rs.getInt("userCount");
+		      }
+
+			 
+			conn.close();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return userCount;
+	}
+	
+	public static String getUserEmail(String userName, String password){
+		String emailAddress = null;
+		
+		Connection conn = null;
+		Statement statement = null;
+		String checkQuery = "select emailAddress from USER_ACCOUNTS where username = '"+ userName +"' and password = '"+ password +"'";
+		
+		 try {
+			  
+			  conn = getConnection(); 
+			 statement = conn.createStatement();
+			 
+		//create a result object
+			 ResultSet rs = statement.executeQuery(checkQuery);
+			 
+			 while (rs.next())
+		      {
+				
+				 emailAddress = rs.getString("emailAddress");
+		      }
+
+			 
+			conn.close();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return emailAddress;
 	}
 }
