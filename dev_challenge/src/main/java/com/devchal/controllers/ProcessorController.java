@@ -30,6 +30,23 @@ public class ProcessorController {
 	
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@RequestMapping(value = ProjectConstants.LOGIN, method=RequestMethod.POST )
+	public responseObject login(HttpEntity<String> httpEntity){
+		responseObject res = new responseObject();
+		System.out.println("---------------> Authentication user <-------------");
+		
+		String fullJson = httpEntity.getBody(); // yeah we finally got the plain json string
+   	 	System.out.println("<----------------------------------------------------------------------->");
+        System.out.println( String.format("JSON INFORMATION ----->" + fullJson));
+        
+        
+		res = systemProcessor.authenticateLogin(fullJson);
+		
+		
+		return res;
+	}
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@RequestMapping(value = ProjectConstants.CREATE_USER, method=RequestMethod.POST )
 	public responseObject addUser(HttpEntity<String> httpEntity){
 		

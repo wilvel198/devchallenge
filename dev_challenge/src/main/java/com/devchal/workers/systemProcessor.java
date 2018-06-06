@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.devchal.databaseutils.DatabaseUtil;
 import com.devchal.giphytools.giphyUtils;
+import com.devchal.pojo.data.AuthObject;
 import com.devchal.pojo.data.GiffyObject;
 import com.devchal.pojo.data.USERDATA;
 import com.devchal.pojo.user.USERACCOUNT;
@@ -33,12 +34,60 @@ public class systemProcessor {
 		//test to load favorite 
 		String favData = "{\"emailAddress\":\"w_velasquezcorp@yahoo.com\",\"categories\":\"happy,cats,interesting\",\"giffyEmeddedURL\":\"https://giphy.com/embed/9qIQcHFew1dAs\",\"giffyID\":\"9qIQcHFew1dAs\",\"giffyTitle\":\"bears hello GIF\",\"giffyURL\":\"https://media0.giphy.com/media/9qIQcHFew1dAs/200_s.gif\"}";
 		String searchString = null;
+		String loginData = "{\"type\": \"login\",\"username\":\"person198\",\"password\":\"password\"}";
+		
+		authenticateLogin(loginData);
 		
 		//searchById(searchString);
 		//addUser(userData);
 		
 		//saveFavProcessor(favData);
 		
+	}
+	
+	
+	public static responseObject authenticateLogin(String fullJson){
+		
+		logger.info("--------- > AUTHENTICATE <--------------");
+		
+		String userName = null;
+		String password = null;
+		String emailAddress = null;
+		responseObject res = new responseObject();
+		Connection conn  = null;
+		PreparedStatement preparedStatement = null;
+		int userCount = 0;
+		
+		Gson gson = new Gson();
+		AuthObject myAuth = gson.fromJson(fullJson, AuthObject.class);
+		userName = myAuth.getUsername();
+		password = myAuth.getPassword();
+		
+		logger.info("user name " + userName);
+		logger.info("password " + password);
+		
+		
+		userCount = DatabaseUtil.verifyAccount(userName, password);
+		
+		logger.info("USER COUNT -->" + userCount);
+		
+		if(userCount > 0){
+			logger.info("PRODUCE EMAIL FOR ACCOUNT TICKET");
+			emailAddress = DatabaseUtil.getUserEmail(userName, password);
+			logger.info("EMAIL ADDRESS = "+ emailAddress);
+			res.setObjectType(emailAddress);
+			res.setMsg("user successfully authenticated");
+			res.setStatus("active");
+			
+			
+		}else{
+			res.setMsg("user account or password incorrect, please try again or create an account");
+			res.setStatus("inactive");
+			res.setObjectType("no account found or incorrect password");
+		}
+		
+		
+		return res;
 	}
 	
 	public static responseObject saveFavProcessor(String fullJson){
