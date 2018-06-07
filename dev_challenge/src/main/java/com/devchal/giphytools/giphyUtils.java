@@ -181,6 +181,8 @@ public class giphyUtils {
 	}
 	
 	
+ 	
+	
 	public static List<String> baseSearch(String searchBase, String searchType){
 		logger.info("-------------------> EXECUTING A BASE SEARCH FOR ITEM OR FULL SEARCH <---------------------------");
 		List<String> list = new ArrayList<>();

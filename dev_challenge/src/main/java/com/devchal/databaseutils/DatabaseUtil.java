@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -18,7 +20,9 @@ public class DatabaseUtil {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		logger.info("------------> TESTING DATABASE CONNECTIONS <------------------");
-		testConnection();
+		//testConnection();
+		
+		getUserFavorites("w_velasquezcorp@yahoo.com");
 		
 		/*
 		String userEmail = "wvelasquezcorp@gmail.com";
@@ -285,5 +289,51 @@ public class DatabaseUtil {
 		}
 		
 		return emailAddress;
+	}
+
+
+	public static List<String> getUserFavorites(String emailAddress) {
+		// TODO Auto-generated method stub
+		System.out.println("----------> GETTING USER FAVORITE <---------");
+		List<String> searchResultList = new ArrayList<String>();
+		String giffyTitle = null;
+		String giffyID = null;
+		String categories = null;
+		String returnInfo = null;
+		
+		Connection conn = null;
+		Statement statement = null;
+		String checkQuery = "select giffyTitle, giffyID,categories from USER_DATA where emailAddress = '"+ emailAddress +"'";
+		
+		 try {
+			  
+			  conn = getConnection(); 
+			 statement = conn.createStatement();
+			 
+		//create a result object
+			 ResultSet rs = statement.executeQuery(checkQuery);
+			 
+			 while (rs.next())
+		      {
+				giffyTitle = rs.getString("giffyTitle");
+				giffyID = rs.getString("giffyID");
+				categories = rs.getString("categories")+"";
+				System.out.println("categorie"+categories +"--->"+ "giffyTitle -->" + giffyTitle +"#####"+giffyID);
+				returnInfo = categories +"--->"+ giffyTitle +"#####"+giffyID;
+				searchResultList.add(returnInfo);
+				// emailAddress = rs.getString("emailAddress");
+		      }
+
+			 
+			conn.close();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 
+		return searchResultList;
 	}
 }

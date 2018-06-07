@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import com.devchal.pojo.data.SearchTopic;
 
 public class systemProcessor {
 
@@ -36,12 +37,12 @@ public class systemProcessor {
 		String searchString = null;
 		String loginData = "{\"type\": \"login\",\"username\":\"person198\",\"password\":\"password\"}";
 		
-		authenticateLogin(loginData);
+		//authenticateLogin(loginData);
 		
 		//searchById(searchString);
 		//addUser(userData);
 		
-		//saveFavProcessor(favData);
+		saveFavProcessor(favData);
 		
 	}
 	
@@ -116,11 +117,11 @@ public class systemProcessor {
 		giffyTitle = userAccountItem.getGiffyTitle();
 		giffyURL = userAccountItem.getGiffyURL();
 		
-		res.setMsg("Item added to database");
+		
 		
 		itemCount = DatabaseUtil.verifyFav(emailAddress, giffyID);
 		
-		if(itemCount > 1){
+		if(itemCount > 0){
 			logger.info(" ------> Update object <--------");
 			
 			query =  "update USER_DATA set categories = ? where emailAddress = ? and giffyID = ?";
@@ -146,7 +147,7 @@ public class systemProcessor {
 			}
 			
 		   
-			
+			res.setMsg("Item updated");	
 			
 			
 		}else
@@ -182,7 +183,7 @@ public class systemProcessor {
 			
 			
 			
-			
+			res.setMsg("Item added to favorites");	
 			
 		}
 		
@@ -301,12 +302,30 @@ public class systemProcessor {
 	}
 	
 	
+	public static List<String> getUserFavorite(String searchJson){
+		List<String> searchResultList = new ArrayList<String>();
+		logger.info("full JSON "+ searchJson);
+		String userName = null;
+		
+		Gson gson = new Gson();
+		SearchTopic mySearchObject = gson.fromJson(searchJson, SearchTopic.class);
+		userName = mySearchObject.getSearchTopic();
+		searchResultList.add("nba finals#####deNdwcvjXzTTTV7LXF");
+		searchResultList.add("nba finals#####deNdwcvjXzTTTV7LXF");
+		
+		
+		
+		searchResultList = DatabaseUtil.getUserFavorites(userName);
+		
+		
+		return searchResultList;
+	}
+	
 	public static List<String> getGiffySearchByTopic(String searchJson){
 		System.out.println("SEARCH FROM SERVER CALL ------>" + searchJson);
 		
 		List<String> searchResultList = new ArrayList<String>();
-		searchResultList.add("dogs_jumprope_GIF##cLcxtL1z8t8oo");
-		searchResultList.add("star wars dogs GIF##fItgT774J3nWw");
+		
 		String searchType = null;
 		String searchBase = "dogs";
 		

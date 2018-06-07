@@ -150,6 +150,31 @@ public class ProcessorController {
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@RequestMapping(value = ProjectConstants.GET_FAVLIST, method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE )
+	@ResponseBody
+	public GiffySearchResults getUserFavorites(HttpEntity<String> httpEntity){
+		
+		GiffySearchResults myRes = new GiffySearchResults();
+		
+		String responseData = null;
+		
+   	 	String fullJson = httpEntity.getBody(); // yeah we finally got the plain json string
+   	 	System.out.println("<----------------------------------------------------------------------->");
+        System.out.println( String.format("JSON INFORMATION ----->" + fullJson));
+         List<String> myResponse = systemProcessor.getUserFavorite(fullJson);
+        
+        System.out.println("<----------------------------------------------------------------------->");
+   	
+        String[] searchArr = new String[myResponse.size()];
+		searchArr = myResponse.toArray(searchArr);
+		
+		myRes.setSearchResults(searchArr);
+		
+		return myRes;
+		
+	}
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@RequestMapping(value = ProjectConstants.SEARCH_BYTOPIC, method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE )
 	@ResponseBody
 	public GiffySearchResults searchByTopic(HttpEntity<String> httpEntity){
